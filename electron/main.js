@@ -51,6 +51,32 @@ app.on("window-all-closed", () => {
     }
 });
 
+// SerialPort's native bindings keep libuv handles alive and prevent the
+// process from exiting naturally after app.quit(). Destroy every open port
+// then, after a short grace period for native cleanup, force-exit so the
+// console returns to the prompt immediately.
+//
+// 100 ms is enough for the @serialport/bindings-cpp thread-pool workers to
+// finish their current work without being perceptible to the user.
+const NATIVE_CLEANUP_DELAY_MS = 100;
+
+app.on("will-quit", (event) => {
+    event.preventDefault();
+    for (const port of openPorts.values()) {
+        try {
+            port.destroy();
+        } catch (_) {
+            // ignore – port may already be closed
+        }
+    }
+    openPorts.clear();
+    // Give native bindings a moment to release resources before forcing exit.
+    const exitTimer = setTimeout(() => process.exit(0), NATIVE_CLEANUP_DELAY_MS);
+    // Unref the timer so it does not itself keep the event loop alive if
+    // the process manages to exit naturally before the delay elapses.
+    exitTimer.unref();
+});
+
 // ---------------------------------------------------------------------------
 // IPC handlers – serial port passthrough
 // ---------------------------------------------------------------------------
