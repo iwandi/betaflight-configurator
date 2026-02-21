@@ -20,9 +20,9 @@
     "android:run": "vite build && node capacitor.config.generator.mjs && npx cap run android",
     "android:sync": "vite build && node capacitor.config.generator.mjs && npx cap sync android",
     "android:release": "vite build && node capacitor.config.generator.mjs && npx cap build android --release",
-    "electron:dev": "vite build && ELECTRON_DEV_SERVER_URL='' electron electron/main.js",
-    "electron:preview": "vite build && electron electron/main.js",
-    "electron:dist": "vite build && electron-builder --config electron-builder.json",
+    "electron:dev": "npx vite build && npx cross-env ELECTRON_DEV_SERVER_URL='' npx electron electron/main.js",
+    "electron:preview": "npx vite build && npx electron electron/main.js",
+    "electron:dist": "npx vite build && npx electron-builder --config electron-builder.json",
     "format": "prettier --write {src,test}/**/*.{js,vue,css,less}",
     "storybook": "start-storybook -p 6006",
     "prepare": "husky"
