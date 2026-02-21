@@ -1,0 +1,32 @@
+{
+    "appId": "com.betaflight.configurator",
+    "productName": "Betaflight",
+    "directories": {
+        "output": "electron-dist"
+    },
+    "files": [
+        "electron/**/*",
+        "src/dist/**/*"
+    ],
+    "extraMetadata": {
+        "main": "electron/main.js"
+    },
+    "win": {
+        "target": "nsis",
+        "icon": "src/images/bf_icon_128.png"
+    },
+    "mac": {
+        "target": "dmg",
+        "icon": "src/images/bf_icon_128.png",
+        "category": "public.app-category.utilities"
+    },
+    "linux": {
+        "target": ["AppImage", "deb"],
+        "icon": "src/images/bf_icon_128.png",
+        "category": "Utility"
+    },
+    "nsis": {
+        "oneClick": false,
+        "allowToChangeInstallationDirectory": true
+    }
+}

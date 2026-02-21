@@ -46,6 +46,10 @@ export function isAndroid() {
     return false;
 }
 
+export function isElectron() {
+    return typeof window !== "undefined" && typeof window.electronAPI !== "undefined";
+}
+
 export function isIOS() {
     if (Capacitor.isNativePlatform()) {
         return Capacitor.getPlatform() === "ios";
@@ -66,7 +70,7 @@ export function checkCompatibility() {
         typeof process !== "undefined" && (process.env.NODE_ENV === "test" || process.env.JEST_WORKER_ID !== undefined);
 
     const compatible =
-        isTestEnvironment || isNative || (isChromium && (hasSerialSupport || hasBluetoothSupport || hasUsbSupport));
+        isTestEnvironment || isNative || isElectron() || (isChromium && (hasSerialSupport || hasBluetoothSupport || hasUsbSupport));
 
     console.log("User Agent: ", navigator.userAgentData);
     console.log("Native: ", isNative);
@@ -128,7 +132,9 @@ export function checkCompatibility() {
 
 export function checkSerialSupport() {
     let result = false;
-    if (isAndroid()) {
+    if (isElectron()) {
+        result = true;
+    } else if (isAndroid()) {
         result = true;
     } else if (navigator.serial) {
         result = true;

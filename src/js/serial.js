@@ -2,10 +2,11 @@ import WebSerial from "./protocols/WebSerial.js";
 import WebBluetooth from "./protocols/WebBluetooth.js";
 import Websocket from "./protocols/WebSocket.js";
 import VirtualSerial from "./protocols/VirtualSerial.js";
-import { isAndroid } from "./utils/checkCompatibility.js";
+import { isAndroid, isElectron } from "./utils/checkCompatibility.js";
 import CapacitorSerial from "./protocols/CapacitorSerial.js";
 import CapacitorBle from "./protocols/CapacitorBle.js";
 import CapacitorTcp from "./protocols/CapacitorTcp.js";
+import ElectronSerial from "./protocols/ElectronSerial.js";
 
 /**
  * Base Serial class that manages all protocol implementations
@@ -26,6 +27,11 @@ class Serial extends EventTarget {
                 { name: "serial", instance: new CapacitorSerial() },
                 { name: "bluetooth", instance: new CapacitorBle() },
                 { name: "tcp", instance: new CapacitorTcp() },
+            ];
+        } else if (isElectron()) {
+            this._protocols = [
+                { name: "serial", instance: new ElectronSerial() },
+                { name: "tcp", instance: new Websocket() },
             ];
         } else {
             this._protocols = [
