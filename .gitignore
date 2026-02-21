@@ -13,6 +13,7 @@ debug/
 release/
 testresults/
 .eslintcache
+electron-dist/
 
 # OSX
 .DS_store

@@ -20,6 +20,12 @@
     "android:run": "vite build && node capacitor.config.generator.mjs && npx cap run android",
     "android:sync": "vite build && node capacitor.config.generator.mjs && npx cap sync android",
     "android:release": "vite build && node capacitor.config.generator.mjs && npx cap build android --release",
+    "preelectron:dev": "yarn install",
+    "electron:dev": "yarn build && cross-env ELECTRON_DEV_SERVER_URL='' electron electron/main.js",
+    "preelectron:preview": "yarn install",
+    "electron:preview": "yarn build && electron electron/main.js",
+    "preelectron:dist": "yarn install",
+    "electron:dist": "yarn build && electron-builder --config electron-builder.json",
     "format": "prettier --write {src,test}/**/*.{js,vue,css,less}",
     "storybook": "start-storybook -p 6006",
     "prepare": "husky"
@@ -38,7 +44,7 @@
   "author": "The Betaflight open source project.",
   "license": "GPL-3.0",
   "engines": {
-    "node": "24.x"
+    "node": "22.x || 24.x"
   },
   "dependencies": {
     "@capacitor/android": "8.0.2",
@@ -67,6 +73,7 @@
     "pinia": "^3.0.4",
     "select2": "^4.0.13",
     "short-unique-id": "^5.2.0",
+    "serialport": "^13.0.0",
     "switchery-latest": "^0.8.2",
     "three": "^0.176.0",
     "tiny-emitter": "^2.1.0",
@@ -90,7 +97,10 @@
     "@storybook/vue3": "^8.6.3",
     "babel-loader": "^10.0.0",
     "command-exists": "^1.2.9",
+    "cross-env": "^10.1.0",
     "del": "^8.0.0",
+    "electron": "^40.6.0",
+    "electron-builder": "^26.8.1",
     "eslint": "^9.21.0",
     "eslint-config-prettier": "^10.0.2",
     "eslint-define-config": "^2.1.0",
