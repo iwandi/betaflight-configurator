@@ -41,7 +41,7 @@
   "author": "The Betaflight open source project.",
   "license": "GPL-3.0",
   "engines": {
-    "node": "24.x"
+    "node": "22.x || 24.x"
   },
   "dependencies": {
     "@capacitor/android": "8.0.2",
