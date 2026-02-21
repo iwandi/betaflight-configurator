@@ -6,7 +6,13 @@
     },
     "files": [
         "electron/**/*",
-        "src/dist/**/*"
+        "src/dist/**/*",
+        "node_modules/**/*",
+        "package.json"
+    ],
+    "asarUnpack": [
+        "node_modules/serialport/**/*",
+        "node_modules/@serialport/**/*"
     ],
     "extraMetadata": {
         "main": "electron/main.js"
